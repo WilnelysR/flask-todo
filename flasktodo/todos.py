@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, request, redirect, url_for
+import datetime
 from . import db
 
 
@@ -16,3 +16,23 @@ def index():
 
     return render_template("index.html", todos=todos)
 
+
+@bp.route("/items", methods = ('GET', 'POST'))
+def form():
+    """View for form page which allows you to add an item to your list"""
+    if request.method == 'POST':
+        item = request.form['items']
+        dt = datetime.datetime.now()
+
+
+        cur = db.get_db().cursor()
+        cur.execute("""
+         INSERT INTO todos (description, completed, created_at)
+         VALUES (%s, %s, %s);
+         """,
+         (item,False,dt))
+        db.get_db().commit()
+        cur.close()
+
+        return redirect(url_for('todos.index'))
+    return render_template('form.html')

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Add your items</h1>
+
+<a href="{{ url_for('todos.index') }}"><input type="button" value="Back to Your List"></a></li>
+
+<form method="post">
+  <input name="items" id="items" required>
+  <input type="submit" value="Save">
+</form>
+
+
+{% endblock %}
