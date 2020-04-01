@@ -11,6 +11,9 @@
     {% for todo in todos %}
       <li class="{{ "completed" if todo['completed'] }}">
         {{ todo['description'] }}
+        {% if todo['completed'] == False %}
+        <a href="{{ url_for('todos.strike', id=todo['id']) }}"><input type="button" value="Complete"></a>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
