@@ -4,6 +4,8 @@
   <h1>Add your items</h1>
 
 <a href="{{ url_for('todos.index') }}"><input type="button" value="Back to Your List"></a></li>
+<a href="{{ url_for('todos.completed_task') }}"><input type="button" value="Show completed task"></a></li>
+<a href="{{ url_for('todos.not_completed_task') }}"><input type="button" value="Show not completed task"></a></li>
 
 <form method="post">
   <input name="items" id="items" required>

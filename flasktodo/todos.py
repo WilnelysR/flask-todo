@@ -16,6 +16,30 @@ def index():
 
     return render_template("index.html", todos=todos)
 
+@bp.route("/completed_task", methods= ('GET', 'POST'))
+def completed_task():
+    """View for the indwx page to see completed tasks"""
+    cur = db.get_db().cursor()
+    cur.execute("""
+     SELECT * FROM todos
+     WHERE completed = 'True';""")
+    todos = cur.fetchall()
+    cur.close()
+
+    return render_template("index.html", todos=todos)
+
+
+@bp.route("/not_completed_task", methods= ('GET', 'POST'))
+def not_completed_task():
+    """View for index page to see uncompleted task"""
+    cur = db.get_db().cursor()
+    cur.execute("""
+     SELECT * FROM todos
+     WHERE completed = 'False';""")
+    todos = cur.fetchall()
+    cur.close()
+
+    return render_template("index.html", todos=todos)
 
 @bp.route("/items", methods = ('GET', 'POST'))
 def form():
