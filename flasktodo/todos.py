@@ -70,7 +70,7 @@ def strike(id):
     UPDATE todos SET completed = True
     WHERE id = %s;
     """,
-        (id))
+        (id,))
     db.get_db().commit()
     cur.execute('SELECT * FROM todos')
     todos = cur.fetchall()
@@ -87,7 +87,7 @@ def delete(id):
     DELETE FROM todos
     WHERE id = %s;
     """,
-        (id))
+        (id,))
     db.get_db().commit()
     cur.execute('SELECT * FROM todos')
     todos = cur.fetchall()
