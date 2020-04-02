@@ -61,13 +61,30 @@ def form():
         return redirect(url_for('todos.index'))
     return render_template('form.html')
 
-@bp.route("/<id>")
+@bp.route("/completed/<id>")
 def strike(id):
     """Mark an item as completed"""
 
     cur = db.get_db().cursor()
     cur.execute("""
     UPDATE todos SET completed = True
+    WHERE id = %s;
+    """,
+        (id))
+    db.get_db().commit()
+    cur.execute('SELECT * FROM todos')
+    todos = cur.fetchall()
+    cur.close()
+
+    return render_template("index.html", todos = todos)
+
+@bp.route("/delete/<id>")
+def delete(id):
+    """delete a task when done with it"""
+
+    cur = db.get_db().cursor()
+    cur.execute("""
+    DELETE FROM todos
     WHERE id = %s;
     """,
         (id))
